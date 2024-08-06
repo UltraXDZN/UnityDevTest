@@ -4,7 +4,9 @@ namespace UDT.Settings
 {
     public static class UDT_Constants
     {
-        public static float DEFAULT_SPEED { get; } = 5.0f;
+        public static float DEFAULT_SPEED { get; } = 0.0f;
+        public static float MAX_SPEED { get; } = 5.0f;
+        public static float ACCELERATION { get; } = 1.0f;
         public static float DEFAULT_TURN_SPEED { get; } = 360.0f;
 
 
@@ -19,6 +21,6 @@ namespace UDT.Settings
         public static float DEFAULT_Y_ROTATION { get; } = 0.0f;
         public static float DEFAULT_Z_ROTATION { get; } = 0.0f;
 
-        public static float Y_ROTATION_SKEW_ANGLE { get; } = 45f;
+        public static float Y_ROTATION_SKEW_ANGLE { get; } = 45.0f;
     }
 }
