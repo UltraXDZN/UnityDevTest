@@ -11,9 +11,14 @@ namespace UDT.Gameplay{
         [SerializeField] private Rigidbody m_playerRigidbody;
         [SerializeField] private Transform m_cameraPivotTransform;
         [SerializeField] private Animator m_playerAnimator;
+        [SerializeField] private LayerMask m_worldLayer;
 
         [Header("Player Movement")]
         [SerializeField] private float m_maxSpeed = MAX_SPEED;
+
+        [Range(0.0f, 1.0f)]
+        [SerializeField] private float m_distanceToGround = 0.1f;
+        [SerializeField] public GameObject aionHasSmallD;
         
         private float m_currentSpeed = DEFAULT_SPEED;
         private float m_turnSpeed = DEFAULT_TURN_SPEED;
@@ -126,6 +131,68 @@ namespace UDT.Gameplay{
         private void UpdateAnimatorParameters(Vector3 _direction){
             float _speedPercent = _direction.magnitude;
             m_playerAnimator.SetFloat("Speed", _speedPercent); // Assumes the blend tree uses a parameter named "Speed"
+        }
+
+        /// <summary>
+        /// Called by the Unity animation system to handle IK (Inverse Kinematics) operations on the character.
+        /// It sets the weights and transformations for the feet IK.
+        /// </summary>
+        /// <param name="_layerIndex">The index of the layer on which the IK is applied.</param>
+        private void OnAnimatorIK(int _layerIndex)
+        {
+            SetFeetIKWeights();
+            SetFeetIKTransforms();
+        }
+
+        /// <summary>
+        /// Sets the IK weights for the character's feet based on the animator's parameters.
+        /// </summary>
+        private void SetFeetIKWeights()
+        {
+            SetIKWeight(AvatarIKGoal.LeftFoot, m_playerAnimator.GetFloat(IK_WEIGHT_LEFT));
+            SetIKWeight(AvatarIKGoal.RightFoot, m_playerAnimator.GetFloat(IK_WEIGHT_RIGHT));
+        }
+
+        /// <summary>
+        /// Sets the IK position and rotation weights for a specified foot.
+        /// </summary>
+        /// <param name="_goal">The foot (left or right) for which the IK weights are being set.</param>
+        /// <param name="_weight">The weight (influence) of the IK position and rotation.</param>
+        private void SetIKWeight(AvatarIKGoal _goal, float _weight)
+        {
+            m_playerAnimator.SetIKPositionWeight(_goal, _weight);
+            m_playerAnimator.SetIKRotationWeight(_goal, _weight);
+        }
+
+        /// <summary>
+        /// Sets the IK transformations (position and rotation) for the character's feet
+        /// to align them with the ground surface.
+        /// </summary>
+        private void SetFeetIKTransforms()
+        {
+            SetIKTransform(AvatarIKGoal.LeftFoot);
+            SetIKTransform(AvatarIKGoal.RightFoot);
+        }
+
+        /// <summary>
+        /// Calculates and sets the IK position and rotation for a specified foot
+        /// to ensure it properly aligns with the ground surface.
+        /// </summary>
+        /// <param name="_goal">The foot (left or right) for which the IK transformation is being set.</param>
+        private void SetIKTransform(AvatarIKGoal _goal)
+        {
+            Vector3 _footPosition = m_playerAnimator.GetIKPosition(_goal);
+            Ray _ray = new Ray(_footPosition + Vector3.up, Vector3.down);
+
+            RaycastHit _hit;
+            if (Physics.Raycast(_ray, out _hit, m_distanceToGround + IK_DISTANCE, m_worldLayer))
+            {
+                Vector3 _targetPosition = _hit.point + Vector3.up * m_distanceToGround;
+                Quaternion _targetRotation = Quaternion.LookRotation(transform.forward, _hit.normal);
+
+                m_playerAnimator.SetIKPosition(_goal, _targetPosition);
+                m_playerAnimator.SetIKRotation(_goal, _targetRotation);
+            }
         }
 
     }

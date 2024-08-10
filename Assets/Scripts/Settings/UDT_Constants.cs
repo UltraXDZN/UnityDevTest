@@ -21,6 +21,10 @@ namespace UDT.Settings
         public static float DEFAULT_Y_ROTATION { get; } = 0.0f;
         public static float DEFAULT_Z_ROTATION { get; } = 0.0f;
 
-        public static float Y_ROTATION_SKEW_ANGLE { get; } = 45.0f;
+        public static float Y_ROTATION_SKEW_ANGLE { get; } = -45.0f;
+
+        public static string IK_WEIGHT_LEFT { get; } = "IKLeftFootWeight";
+        public static string IK_WEIGHT_RIGHT { get; } = "IKRightFootWeight";
+        public static float IK_DISTANCE { get; } = 1.0f;
     }
 }
