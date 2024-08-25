@@ -9,7 +9,8 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
-
+/[Aa]ssets/Resources/Characters/Rio/*
+/[Aa]ssets/Resources/Weapons/*
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # [Aa]ssets/AssetStoreTools*
 
@@ -41,6 +42,7 @@ ExportedObj/
 *.pidb.meta
 *.pdb.meta
 *.mdb.meta
+*.meta
 
 # Unity3D generated file on crash reports
 sysinfo.txt

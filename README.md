@@ -10,6 +10,8 @@ Currently Implemented Features:
 
 - Player Movement System - **DONE**
 - Isometric Camera - **DONE**
+- IK system - **DONE**
+- Player Animation - **DONE**
 
 
 

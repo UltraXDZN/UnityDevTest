@@ -6,6 +6,7 @@ namespace UDT.Settings
     {
         public static float DEFAULT_SPEED { get; } = 0.0f;
         public static float MAX_SPEED { get; } = 5.0f;
+        public static float MAX_CROUCHING_SPEED { get; } = 1.0f;
         public static float ACCELERATION { get; } = 1.0f;
         public static float DEFAULT_TURN_SPEED { get; } = 360.0f;
 
@@ -25,6 +26,12 @@ namespace UDT.Settings
 
         public static string IK_WEIGHT_LEFT { get; } = "IKLeftFootWeight";
         public static string IK_WEIGHT_RIGHT { get; } = "IKRightFootWeight";
+        public static string IK_WEIGHT_LEFT_HAND { get; } = "IKLeftHandWeight";
+        public static string IK_WEIGHT_RIGHT_HAND { get; } = "IKRightHandWeight";
+
         public static float IK_DISTANCE { get; } = 1.0f;
+
+        public static float OBSTACLE_RAY_DISTANCE_DEFAULT { get; } = 5.0f;
+        public static float OBSTACLE_RAY_DISTANCE_MIN { get; } = 1.0f;
     }
 }
