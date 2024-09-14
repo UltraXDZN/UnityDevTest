@@ -1,4 +1,7 @@
 using System;
+using System.Linq;
+using TMPro;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 namespace UDT.Gameplay.Player
@@ -25,7 +28,12 @@ namespace UDT.Gameplay.Player
 
         [SerializeField] private BoxCollider m_playerColliderCrouch;
         [SerializeField] private CapsuleCollider m_playerColliderStand;
+        
+        [SerializeField] private bool m_battleStateStatus = false;
+        
+        [SerializeField] private string m_tagField;
 
+        [SerializeField] private BoxCollider[] m_affectedColliders;
         private UDT_PlayerMovement m_playerMovement;
         private UDT_PlayerAnimation m_playerAnimation;
         private UDT_CameraController m_cameraController;
@@ -34,11 +42,16 @@ namespace UDT.Gameplay.Player
         private UDT_SwordPositioning m_swordPositioning;
         private UDT_PlayerCollisionHandler m_collisionHandler;
 
+        public bool BattleStateStatus { get => m_battleStateStatus; set => m_battleStateStatus = value; }
 
         private void Awake()
         {
             m_playerRigidbody = GetComponent<Rigidbody>();
             InitializeComponents();
+        }
+
+        private void Start(){
+            m_affectedColliders = GameObject.FindGameObjectsWithTag(m_tagField).SelectMany(go => go.GetComponents<BoxCollider>()).ToArray();
         }
 
         /// <summary>
@@ -51,7 +64,7 @@ namespace UDT.Gameplay.Player
             m_cameraController = new UDT_CameraController(m_cameraPivotTransform, transform);
             m_inverseKinematics = new UDT_InverseKinematics(m_playerAnimator, m_worldLayer, m_playerRightShoulderTransform, m_playerLeftShoulderTransform);
             m_obstacleDetection = new UDT_ObstacleDetection(this, m_worldLayer, m_inverseKinematics, m_playerMovement);
-            m_swordPositioning = new UDT_SwordPositioning(m_playerSwordTransform, m_playerHandTransform, m_playerBackTransform);
+            m_swordPositioning = new UDT_SwordPositioning(m_playerSwordTransform);
             m_collisionHandler = new UDT_PlayerCollisionHandler(m_playerAnimator, m_playerColliderCrouch, m_playerColliderStand);
         }
 
@@ -60,6 +73,7 @@ namespace UDT.Gameplay.Player
             m_playerMovement.HandleMovement();
             m_playerAnimation.UpdateAnimations();
             m_cameraController.FollowPlayer();
+            UpdateGate();
         }
 
         private void FixedUpdate()
@@ -82,5 +96,40 @@ namespace UDT.Gameplay.Player
         {
             m_collisionHandler.HandleTriggerExit(other);
         }
+
+        private void UpdateGate(){
+            
+            ApplyBattleStatus();
+            foreach (BoxCollider _wallGate in m_affectedColliders)
+            {
+                _wallGate.enabled = BattleStateStatus;
+            }
+            
+        }
+
+        private void ApplyBattleStatus(){
+            BattleStateStatus = GetBattleStatus();
+        }
+
+        private bool GetBattleStatus(){
+            return m_playerAnimator.GetBool("IsInBattle");
+        }
+
+        /// <summary>
+        /// Moves the sword to the player's hand
+        /// </summary>
+        public void MoveSwordToHand()
+        {
+            m_swordPositioning.MoveSwordTo(m_playerHandTransform);
+        }
+
+        /// <summary>
+        /// Moves the sword to the player's back
+        /// </summary>
+        public void MoveSwordToBack()
+        {
+            m_swordPositioning.MoveSwordTo(m_playerBackTransform);
+        }
+
     }
 }

@@ -9,7 +9,7 @@ namespace UDT.Gameplay.Player
         private Animator m_playerAnimator;
         private LayerMask m_worldLayer;
         private float m_distanceToGround = 0.1f;
-        private Vector3 wallNormal;
+        private Vector3 m_wallNormal;
         public Transform rightShoulderSpawn;
         public Transform leftShoulderSpawn;
         public float distanceWall = 0.1f;
@@ -97,7 +97,7 @@ namespace UDT.Gameplay.Player
         /// <param name="hit"></param>
         private void HandleHandIK(AvatarIKGoal goal, RaycastHit hit)
         {
-            var d = Vector3.Dot(wallNormal, m_playerAnimator.transform.right);
+            var d = Vector3.Dot(m_wallNormal, m_playerAnimator.transform.right);
             if (d < -0.55f)
             {
                 PlaceRightHand();
@@ -120,13 +120,13 @@ namespace UDT.Gameplay.Player
         private void PlaceRightHand(float offset = 0.0f)
         {
             RaycastHit hit;
-            var ray = new Ray(rightShoulderSpawn.position, -wallNormal);
+            var ray = new Ray(rightShoulderSpawn.position, -m_wallNormal);
             if (Physics.Raycast(ray, out hit, 1.0f, m_worldLayer))
             {
                 var v = Vector3.zero;
                 if (offset != 0.0f)
                 {
-                    v = Quaternion.Euler(0, 90, 0) * wallNormal;
+                    v = Quaternion.Euler(0, 90, 0) * m_wallNormal;
                 }
 
                 Vector3 targetPosition = hit.point + hit.normal * distanceWall + v * offset;
@@ -141,13 +141,13 @@ namespace UDT.Gameplay.Player
         private void PlaceLeftHand(float offset = 0.0f)
         {
             RaycastHit hit;
-            var ray = new Ray(leftShoulderSpawn.position, -wallNormal);
+            var ray = new Ray(leftShoulderSpawn.position, -m_wallNormal);
             if (Physics.Raycast(ray, out hit, 1.0f, m_worldLayer))
             {
                 var v = Vector3.zero;
                 if (offset != 0.0f)
                 {
-                    v = Quaternion.Euler(0, -90, 0) * wallNormal;
+                    v = Quaternion.Euler(0, -90, 0) * m_wallNormal;
                 }
 
                 Vector3 targetPosition = hit.point + hit.normal * distanceWall + v * offset;
@@ -161,7 +161,7 @@ namespace UDT.Gameplay.Player
         /// <param name="normal"></param>
         public void SetWallNormal(Vector3 normal)
         {
-            wallNormal = normal;
+            m_wallNormal = normal;
         }
     }
 }

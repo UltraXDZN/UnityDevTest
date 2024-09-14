@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace UDT.Gameplay.Player
@@ -10,10 +9,8 @@ namespace UDT.Gameplay.Player
         private UDT_Player m_playerController;
         private LayerMask m_worldLayer;
         
-        private Vector3 m_wallNormal;
         private UDT_InverseKinematics m_inverseKinematics;
         private UDT_PlayerMovement m_playerMovement;
-
 
 
         public UDT_ObstacleDetection(UDT_Player playerController, LayerMask worldLayer, UDT_InverseKinematics inverseKinematics, UDT_PlayerMovement playerMovement)
@@ -72,5 +69,7 @@ namespace UDT.Gameplay.Player
         {
             m_inverseKinematics.SetWallNormal(normal);
         }
+
+
     }
 }

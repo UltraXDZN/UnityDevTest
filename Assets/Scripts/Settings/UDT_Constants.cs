@@ -33,5 +33,13 @@ namespace UDT.Settings
 
         public static float OBSTACLE_RAY_DISTANCE_DEFAULT { get; } = 5.0f;
         public static float OBSTACLE_RAY_DISTANCE_MIN { get; } = 1.0f;
+
+        public static float POSITION_GENERATION_INTERVAL { get; } = 1f;
+        public static float AREA_ALPHA_DEFAULT { get; } = 0.5f;
+        public static float GENERATED_Y_AREA_POSITION { get; } = 0.0f;
+        public static float POINT_RESPAWN_TIMER { get; } = 0.0f;
+        public static float LIMIT_DIVIDER_2D { get; } = 2.0f;
+
+
     }
 }
