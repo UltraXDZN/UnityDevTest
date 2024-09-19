@@ -100,7 +100,7 @@ namespace UDT.Gameplay.Player
         /// <param name="direction"></param>
         private void TurnToDirection(Vector3 direction)
         {
-            Matrix4x4 rotationMatrix = Matrix4x4.Rotate(Quaternion.Euler(DEFAULT_X_ROTATION, Y_ROTATION_SKEW_ANGLE, DEFAULT_Z_ROTATION));
+            Matrix4x4 rotationMatrix = Matrix4x4.Rotate(Quaternion.Euler(Vector3.zero.x, Y_ROTATION_SKEW_ANGLE, Vector3.zero.z));
             Vector3 skewedDirection = rotationMatrix.MultiplyPoint3x4(direction);
 
             Vector3 relative = m_playerRigidbody.position + skewedDirection - m_playerRigidbody.position;
@@ -115,7 +115,7 @@ namespace UDT.Gameplay.Player
         /// <returns>Returns the movement vector based on the horizontal and vertical axis (input values)</returns>
         private Vector3 GetMovementVector(float horizontal, float vertical)
         {
-            return new Vector3(horizontal, DEFAULT_Y_POSITION, vertical);
+            return new Vector3(horizontal, Vector3.zero.y, vertical);
         }
 
         /// <summary>

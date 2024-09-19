@@ -6,13 +6,15 @@ TagManager:
   tags:
   - Walkable
   - Wall
-  - Branch
   - VillageGate
+  - Guard AI
+  - Villager AI
+  - Branch
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Fish
   - Water
   - UI
   - Player

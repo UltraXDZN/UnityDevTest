@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UDT_Water
+  m_Shader: {fileID: 4800000, guid: ee7b589ea3c5e2346a3d9a96b4708fb2, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _SkyboxTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SurfColTex:
+        m_Texture: {fileID: 2800000, guid: 9b88ffb927af33a438325a8bd2f9b033, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WaveTex:
+        m_Texture: {fileID: 2800000, guid: 00ffcdab45522ca4b9ef5410f3b067ec, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _IOR: 0.999
+    - _Roughness: 0.549
+    - _Roughness2: 0.024
+    - _SpecLvl: 2.37
+    - _SpecSize: 0.604
+    - _SpecSmooth: 0.762
+    - _VolDirtEnd: 9.14
+    - _VolDirtStart: -11.64
+    m_Colors:
+    - _Flow: {r: 0.001, g: 0.001, b: 0.1, a: 0.1}
+    - _SurfCol: {r: 0.44455323, g: 0.68441975, b: 0.8490566, a: 0.43137255}
+    - _VolDirtCol: {r: 0.4198113, g: 0.9889761, b: 1, a: 0}
+  m_BuildTextureStacks: []

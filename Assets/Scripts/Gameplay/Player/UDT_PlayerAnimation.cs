@@ -1,3 +1,4 @@
+using UDT.Gameplay.Player;
 using UnityEngine;
 
 namespace UDT.Gameplay
@@ -5,10 +6,12 @@ namespace UDT.Gameplay
     public class UDT_PlayerAnimation
     {
         private Animator m_playerAnimator;
+        private UDT_Player m_player;
 
-        public UDT_PlayerAnimation(Animator animator)
+        public UDT_PlayerAnimation(UDT_Player player, Animator animator)
         {
             m_playerAnimator = animator;
+            m_player = player;
         }
 
         /// <summary>
@@ -25,6 +28,10 @@ namespace UDT.Gameplay
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 m_playerAnimator.SetBool("HasSlashed", true);
+                //m_player.DealDamage();
+            }
+            if (!m_player.IsAlive){
+                m_playerAnimator.SetTrigger("IsDead");
             }
         }
 

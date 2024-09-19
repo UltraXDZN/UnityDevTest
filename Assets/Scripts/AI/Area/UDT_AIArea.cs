@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace UDT.Gameplay.AI {
     using static Settings.UDT_Constants;
+    using Random = UnityEngine.Random;
 
     public class UDT_AIArea : MonoBehaviour
     {
@@ -10,7 +12,7 @@ namespace UDT.Gameplay.AI {
 
         [Header("Visual Settings")]
         [SerializeField] private Color m_areaColor = Color.white;
-        [SerializeField] [Range(0, 1)] private float m_alpha = 0.5f;
+        [SerializeField] [Range(0, 1)] private float m_alpha = AREA_ALPHA_DEFAULT;
 
         private Vector3 m_generatedPosition;
 
@@ -26,15 +28,23 @@ namespace UDT.Gameplay.AI {
             InvokeRepeating(nameof(GenerateRandomPosition), POINT_RESPAWN_TIMER, POSITION_GENERATION_INTERVAL);
         }
 
-        private void GenerateRandomPosition()
+        /// <summary>
+        /// Generates a random position within the area.
+        /// </summary>
+        /// <returns>Generated position</returns>
+        public Vector3 GenerateRandomPosition()
         {
-            GeneratedPosition = transform.position + new Vector3(
+            Vector3 localPosition = new Vector3(
                 Random.Range(-m_size.x / LIMIT_DIVIDER_2D, m_size.x / LIMIT_DIVIDER_2D),
                 GENERATED_Y_AREA_POSITION,
                 Random.Range(-m_size.z / LIMIT_DIVIDER_2D, m_size.z / LIMIT_DIVIDER_2D)
             );
+
+            GeneratedPosition = transform.TransformPoint(localPosition);
+            return GeneratedPosition;
         }
 
+#region Gizmos
         [ExecuteInEditMode]
         private void OnDrawGizmosSelected()
         {
@@ -48,5 +58,6 @@ namespace UDT.Gameplay.AI {
             Gizmos.color = new Color(AreaColor.r, AreaColor.g, AreaColor.b, m_alpha);
             Gizmos.DrawCube(Vector3.zero, m_size);
         }
+#endregion
     }
 }
